@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101126">
+  <meta name="description" content="EduSmart, game kuis edukasi interaktif untuk pelajar SMA dan SMK.">
+  <title>EduSmart — Kuis Pelajar</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="background-glow glow-one"></div>
+  <div class="background-glow glow-two"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="EduSmart Beranda">
+      <span class="brand-icon">E</span>
+      <span>Edu<span class="brand-accent">Smart</span></span>
+    </a>
+    <span class="header-tag">STUDENT QUIZ GAME</span>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <span class="eyebrow"><span class="live-dot"></span> LEARN • PLAY • GROW</span>
+      <h1>Uji kemampuanmu.<br><span>Raih skor terbaikmu.</span></h1>
+      <p>Belajar jadi lebih seru melalui kuis interaktif untuk pelajar SMA/SMK.</p>
+    </section>
+
+    <section class="game-card" aria-label="Permainan kuis">
+      <div class="card-top">
+        <div>
+          <span class="section-label">EDUSMART CHALLENGE</span>
+          <h2 id="screenTitle">Siap untuk tantangan?</h2>
+        </div>
+        <div class="round-badge">✦ QUIZ TIME</div>
+      </div>
+
+      <div id="startScreen" class="screen">
+        <div class="welcome-art" aria-hidden="true">
+          <div class="art-circle">
+            <span class="art-star star-a">✦</span>
+            <span class="art-star star-b">✧</span>
+            <span class="art-book">📚</span>
+            <span class="art-pencil">✎</span>
+          </div>
+        </div>
+
+        <h3>Seberapa luas pengetahuanmu?</h3>
+        <p class="screen-description">
+          Jawab 10 pertanyaan pilihan ganda dari berbagai mata pelajaran.
+          Setiap soal punya waktu 20 detik.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-icon">◎</span>
+            <span><strong>10 soal</strong><small>Kuis campuran</small></span>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">◷</span>
+            <span><strong>20 detik</strong><small>Per pertanyaan</small></span>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">★</span>
+            <span><strong>100 poin</strong><small>Per jawaban benar</small></span>
+          </div>
+        </div>
+
+        <button id="startButton" class="primary-button">
+          Mulai Bermain <span aria-hidden="true">→</span>
+        </button>
+        <p class="small-note">Gratis dimainkan • Tanpa perlu login</p>
+      </div>
+
+      <div id="quizScreen" class="screen hidden">
+        <div class="quiz-meta">
+          <span id="questionCounter">PERTANYAAN 1 DARI 10</span>
+          <span class="score-pill">★ <span id="score">0</span> poin</span>
+        </div>
+
+        <div class="progress-track" role="progressbar"
+             aria-label="Progres kuis" aria-valuemin="0"
+             aria-valuemax="10" aria-valuenow="0" id="progressTrack">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+
+        <div class="question-meta">
+          <span id="subjectTag" class="subject-tag">PENGETAHUAN UMUM</span>
+          <div id="timerBox" class="timer-box">
+            <span aria-hidden="true">◷</span>
+            <span id="timer">20</span> detik
+          </div>
+        </div>
+
+        <h3 id="questionText" class="question-text">Pertanyaan akan muncul di sini.</h3>
+        <div id="answerList" class="answer-list"></div>
+
+        <div id="feedback" class="feedback hidden" aria-live="polite">
+          <strong id="feedbackTitle"></strong>
+          <p id="explanation"></p>
+        </div>
+
+        <button id="nextButton" class="primary-button hidden">
+          Soal Berikutnya <span aria-hidden="true">→</span>
+        </button>
+        <p class="small-note">Pilih satu jawaban yang paling tepat.</p>
+      </div>
+
+      <div id="resultScreen" class="screen hidden">
+        <div class="result-medal" aria-hidden="true">🏆</div>
+        <span class="section-label">CHALLENGE SELESAI</span>
+        <h3 id="resultTitle">Kerja bagus!</h3>
+        <p id="resultMessage" class="screen-description"></p>
+
+        <div class="final-score">
+          <span>SKOR AKHIR</span>
+          <strong id="finalScore">0</strong>
+          <small>dari 1000 poin</small>
+        </div>
+
+        <div class="result-stats">
+          <div><strong id="correctCount">0</strong><span>Benar</span></div>
+          <div><strong id="wrongCount">0</strong><span>Salah / Terlewat</span></div>
+          <div><strong id="accuracy">0%</strong><span>Akurasi</span></div>
+        </div>
+
+        <button id="restartButton" class="primary-button">
+          <span aria-hidden="true">↻</span> Main Lagi
+        </button>
+        <p class="small-note">Terus belajar, terus berkembang!</p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>© 2026 EduSmart</span>
+      <span>Dibuat untuk semangat belajar ✦</span>
+    </footer>
+  </main>
+</body>
+</html>
