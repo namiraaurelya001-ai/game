@@ -1,0 +1,358 @@
+
+"use strict";
+
+const questions = [
+  {
+    subject: "PPKN",
+    question: "Apa dasar negara Republik Indonesia?",
+    answers: [
+      "UUD 1945",
+      "Pancasila",
+      "Bhinneka Tunggal Ika",
+      "Proklamasi Kemerdekaan"
+    ],
+    correct: 1,
+    explanation:
+      "Pancasila merupakan dasar negara Indonesia dan menjadi pedoman dalam kehidupan berbangsa dan bernegara."
+  },
+  {
+    subject: "SEJARAH",
+    question: "Kapan Indonesia memproklamasikan kemerdekaannya?",
+    answers: [
+      "1 Juni 1945",
+      "10 November 1945",
+      "17 Agustus 1945",
+      "28 Oktober 1928"
+    ],
+    correct: 2,
+    explanation:
+      "Indonesia memproklamasikan kemerdekaan pada 17 Agustus 1945 oleh Soekarno dan Mohammad Hatta."
+  },
+  {
+    subject: "GEOGRAFI",
+    question: "Garis khayal yang membagi Bumi menjadi belahan utara dan selatan adalah ...",
+    answers: [
+      "Garis bujur",
+      "Garis khatulistiwa",
+      "Garis tanggal internasional",
+      "Garis balik utara"
+    ],
+    correct: 1,
+    explanation:
+      "Garis khatulistiwa atau ekuator berada pada lintang 0 derajat dan membagi Bumi menjadi belahan utara dan selatan."
+  },
+  {
+    subject: "EKONOMI",
+    question: "Apa yang dimaksud dengan kelangkaan dalam ilmu ekonomi?",
+    answers: [
+      "Semua barang tersedia tanpa batas",
+      "Harga barang selalu turun",
+      "Kebutuhan manusia terbatas",
+      "Sumber daya terbatas dibandingkan kebutuhan"
+    ],
+    correct: 3,
+    explanation:
+      "Kelangkaan terjadi karena sumber daya yang tersedia terbatas, sedangkan kebutuhan manusia beragam dan tidak selalu dapat dipenuhi seluruhnya."
+  },
+  {
+    subject: "BIOLOGI",
+    question: "Organel sel yang menjadi tempat utama respirasi sel untuk menghasilkan ATP adalah ...",
+    answers: [
+      "Ribosom",
+      "Mitokondria",
+      "Lisosom",
+      "Badan Golgi"
+    ],
+    correct: 1,
+    explanation:
+      "Mitokondria merupakan tempat utama respirasi aerob pada sel eukariotik dan menghasilkan ATP sebagai sumber energi sel."
+  },
+  {
+    subject: "BAHASA INGGRIS",
+    question: "Choose the correct sentence.",
+    answers: [
+      "She go to school every day.",
+      "She going to school every day.",
+      "She goes to school every day.",
+      "She gone to school every day."
+    ],
+    correct: 2,
+    explanation:
+      "Dalam simple present tense, subjek orang ketiga tunggal seperti 'she' menggunakan kata kerja dengan akhiran -s atau -es."
+  },
+  {
+    subject: "SOSIOLOGI",
+    question: "Proses seseorang mempelajari nilai dan norma dalam masyarakat disebut ...",
+    answers: [
+      "Sosialisasi",
+      "Kompetisi",
+      "Konflik",
+      "Mobilitas"
+    ],
+    correct: 0,
+    explanation:
+      "Sosialisasi adalah proses belajar nilai, norma, peran, dan pola perilaku agar seseorang dapat berpartisipasi dalam masyarakat."
+  },
+  {
+    subject: "INFORMATIKA",
+    question: "Bahasa yang digunakan untuk mengatur tampilan dan gaya halaman website adalah ...",
+    answers: [
+      "HTML",
+      "SQL",
+      "CSS",
+      "Python"
+    ],
+    correct: 2,
+    explanation:
+      "CSS digunakan untuk mengatur warna, ukuran teks, tata letak, jarak, dan berbagai aspek visual website."
+  },
+  {
+    subject: "MATEMATIKA",
+    question: "Jika 3x + 5 = 20, berapakah nilai x?",
+    answers: [
+      "3",
+      "5",
+      "8",
+      "15"
+    ],
+    correct: 1,
+    explanation:
+      "Kurangi kedua ruas dengan 5 sehingga 3x = 15. Kemudian bagi kedua ruas dengan 3, maka x = 5."
+  },
+  {
+    subject: "PPKN",
+    question: "Semboyan Bhinneka Tunggal Ika memiliki arti ...",
+    answers: [
+      "Bersatu kita teguh",
+      "Berbeda-beda tetapi tetap satu",
+      "Bersama membangun bangsa",
+      "Adil dan makmur"
+    ],
+    correct: 1,
+    explanation:
+      "Bhinneka Tunggal Ika berarti berbeda-beda tetapi tetap satu. Semboyan ini menekankan persatuan di tengah keberagaman Indonesia."
+  }
+];
+
+const TOTAL_TIME = 20;
+const POINTS_PER_CORRECT = 100;
+const LETTERS = ["A", "B", "C", "D"];
+
+const startScreen = document.getElementById("startScreen");
+const quizScreen = document.getElementById("quizScreen");
+const resultScreen = document.getElementById("resultScreen");
+const screenTitle = document.getElementById("screenTitle");
+
+const startButton = document.getElementById("startButton");
+const nextButton = document.getElementById("nextButton");
+const restartButton = document.getElementById("restartButton");
+
+const questionCounter = document.getElementById("questionCounter");
+const scoreElement = document.getElementById("score");
+const progressTrack = document.getElementById("progressTrack");
+const progressBar = document.getElementById("progressBar");
+const subjectTag = document.getElementById("subjectTag");
+const timerBox = document.getElementById("timerBox");
+const timerElement = document.getElementById("timer");
+const questionText = document.getElementById("questionText");
+const answerList = document.getElementById("answerList");
+const feedback = document.getElementById("feedback");
+const feedbackTitle = document.getElementById("feedbackTitle");
+const explanation = document.getElementById("explanation");
+
+let gameQuestions = [];
+let currentIndex = 0;
+let score = 0;
+let correctAnswers = 0;
+let timeLeft = TOTAL_TIME;
+let timerId = null;
+let answered = false;
+
+function shuffle(array) {
+  const result = [...array];
+
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+
+  return result;
+}
+
+function startGame() {
+  clearInterval(timerId);
+
+  gameQuestions = shuffle(questions);
+  currentIndex = 0;
+  score = 0;
+  correctAnswers = 0;
+  answered = false;
+
+  scoreElement.textContent = score;
+  startScreen.classList.add("hidden");
+  resultScreen.classList.add("hidden");
+  quizScreen.classList.remove("hidden");
+  screenTitle.textContent = "Ayo, jawab pertanyaannya!";
+
+  renderQuestion();
+}
+
+function renderQuestion() {
+  clearInterval(timerId);
+  answered = false;
+
+  const question = gameQuestions[currentIndex];
+
+  questionCounter.textContent =
+    `PERTANYAAN ${currentIndex + 1} DARI ${gameQuestions.length}`;
+
+  progressBar.style.width =
+    `${(currentIndex / gameQuestions.length) * 100}%`;
+
+  progressTrack.setAttribute("aria-valuenow", currentIndex);
+  subjectTag.textContent = question.subject;
+  questionText.textContent = question.question;
+
+  answerList.replaceChildren();
+  feedback.classList.add("hidden");
+  nextButton.classList.add("hidden");
+  timerBox.classList.remove("urgent");
+
+  question.answers.forEach((answer, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "answer-button";
+
+    const letter = document.createElement("span");
+    letter.className = "answer-letter";
+    letter.textContent = LETTERS[index];
+
+    const answerText = document.createElement("span");
+    answerText.textContent = answer;
+
+    button.append(letter, answerText);
+    button.addEventListener("click", () => handleAnswer(index));
+
+    answerList.appendChild(button);
+  });
+
+  timeLeft = TOTAL_TIME;
+  updateTimerDisplay();
+
+  timerId = setInterval(() => {
+    timeLeft -= 1;
+    updateTimerDisplay();
+
+    if (timeLeft <= 0) {
+      clearInterval(timerId);
+      handleAnswer(null);
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  timerElement.textContent = timeLeft;
+  timerBox.classList.toggle("urgent", timeLeft <= 5);
+}
+
+function handleAnswer(selectedIndex) {
+  if (answered) return;
+
+  answered = true;
+  clearInterval(timerId);
+
+  const question = gameQuestions[currentIndex];
+  const buttons = answerList.querySelectorAll(".answer-button");
+  const isCorrect = selectedIndex === question.correct;
+
+  buttons.forEach((button, index) => {
+    button.disabled = true;
+
+    if (index === question.correct) {
+      button.classList.add("correct");
+      button.querySelector(".answer-letter").textContent = "✓";
+    } else if (index === selectedIndex) {
+      button.classList.add("incorrect");
+      button.querySelector(".answer-letter").textContent = "×";
+    }
+  });
+
+  if (isCorrect) {
+    score += POINTS_PER_CORRECT;
+    correctAnswers += 1;
+    scoreElement.textContent = score;
+    feedbackTitle.textContent = "✓ Benar! +100 poin";
+  } else if (selectedIndex === null) {
+    feedbackTitle.textContent = "Waktu habis!";
+  } else {
+    feedbackTitle.textContent = "Belum tepat!";
+  }
+
+  explanation.textContent = question.explanation;
+  feedback.classList.remove("hidden");
+
+  progressBar.style.width =
+    `${((currentIndex + 1) / gameQuestions.length) * 100}%`;
+
+  progressTrack.setAttribute(
+    "aria-valuenow",
+    currentIndex + 1
+  );
+
+  nextButton.textContent =
+    currentIndex === gameQuestions.length - 1
+      ? "Lihat Hasil →"
+      : "Soal Berikutnya →";
+
+  nextButton.classList.remove("hidden");
+}
+
+function showResults() {
+  clearInterval(timerId);
+
+  quizScreen.classList.add("hidden");
+  resultScreen.classList.remove("hidden");
+  screenTitle.textContent = "Hasil permainanmu";
+
+  const total = gameQuestions.length;
+  const incorrectAnswers = total - correctAnswers;
+  const accuracy = Math.round((correctAnswers / total) * 100);
+
+  document.getElementById("finalScore").textContent = score;
+  document.getElementById("correctCount").textContent = correctAnswers;
+  document.getElementById("wrongCount").textContent = incorrectAnswers;
+  document.getElementById("accuracy").textContent = `${accuracy}%`;
+
+  let title = "Tetap semangat!";
+  let message =
+    "Terus berlatih dan pelajari pembahasan agar kemampuanmu semakin meningkat.";
+
+  if (accuracy === 100) {
+    title = "Luar biasa!";
+    message = "Sempurna! Kamu berhasil menjawab semua pertanyaan dengan benar.";
+  } else if (accuracy >= 80) {
+    title = "Hebat sekali!";
+    message = "Pengetahuanmu sudah bagus. Terus pertahankan semangat belajarmu!";
+  } else if (accuracy >= 60) {
+    title = "Kerja bagus!";
+    message = "Kamu sudah berada di jalur yang tepat. Ayo tingkatkan lagi!";
+  }
+
+  document.getElementById("resultTitle").textContent = title;
+  document.getElementById("resultMessage").textContent = message;
+}
+
+function nextQuestion() {
+  if (!answered) return;
+
+  if (currentIndex < gameQuestions.length - 1) {
+    currentIndex += 1;
+    renderQuestion();
+  } else {
+    showResults();
+  }
+}
+
+startButton.addEventListener("click", startGame);
+nextButton.addEventListener("click", nextQuestion);
+restartButton.addEventListener("click", startGame);
